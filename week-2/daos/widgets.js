@@ -3,11 +3,12 @@ const Widgets = require('../models/widgets');
 module.exports = {};
   
 module.exports.create = async (widget) => {
-  //TODO: create widget document in the DB
+    return await Widgets.create(widget);
 };
 
 module.exports.getById = async (id) => {
-  //TODO: look up widget in the DB and return it
+  const widget = await Widgets.findOne({_id: id}).lean();
+  return widget;
 };
 
 //TODO: add method to update widget

@@ -7,14 +7,15 @@ router.post("/", async (req, res, next) => {
   if (!widget || JSON.stringify(widget) === '{}' ) {
     res.status(400).send('widget is required');
   } else {
-    //TODO: save widget here
+    const savedWidget = await WidgetDAO.create(widget);
+    res.json(savedWidget);
   }
 });
 
 // Read - single widget
 router.get("/:id", async (req, res, next) => {
   const widgetId = req.params.id;
-  const widget = null; //TODO: get widget here;
+  const widget = await WidgetDAO.getById(widgetId); 
   if (widget) {
     res.json(widget);
   } else {
