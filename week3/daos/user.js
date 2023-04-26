@@ -2,8 +2,14 @@ const User = require('../models/user');
 
 module.exports = {};
 
-module.exports.getAll = (page, perPage) => {
+module.exports.getAll = (page, perPage, query) => {
+  if(query) {
+    return User.find({$text: {$search: query} },
+    {score: {$meta: 'textScore'}}
+    ).sort({score: {$meta: 'textScore'}}).limit(perPage).skip(perPage*page).lean();
+  } else {
   return User.find().limit(perPage).skip(perPage*page).lean();
+  }
 }
 
 module.exports.getById = (userId) => {
